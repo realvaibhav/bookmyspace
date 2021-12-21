@@ -1,0 +1,97 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+
+    {% block title %}Booking History{% endblock %}
+
+                        {% block navbar %}
+                        <a href="pl-bh">Booking History</a>
+                        <a href="vp">Change Password</a>
+                        <a href="up">Update Profile</a>
+                        <a href="../">Logout</a>
+                            {% endblock %}
+
+            {% block content %}
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+            <p>{{ no_data_message }}</p>
+            <table class="table table-striped" style="max-width: 80%;">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Contact No</th>
+                    <th scope="col">Price Charged</th>
+                    <th scope="col">Booked Timing</th>
+                    <th scope="col">Mode of Payment</th>
+                    <th scope="col">Booked On</th>
+                    <th scope="col">Feedback</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ booking.booking_code.user_id.name }}</td>
+                        <td>{{ booking.booking_code.user_id.phonenumber }}</td>
+                        <td>&#8377; <span style="color: rgb(18, 185, 18)">{{ booking.booking_code.total_price_paid }}</span></td>
+                        <td>{{ booking.booking_code.booked_date }}, {{ booking.booking_code.booked_time }}</td>
+                        <td>{{ booking.booking_code.mode_of_payment }}</td>
+                        <td>{{ booking.booking_code.booking_date }}</td>
+                        <td style="max-width: 200px;">
+                            {% if booking.booking_code.feedback != None %}
+                                {{ booking.booking_code.feedback }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+            <!-- <p>{{ no_data_message }}</p>
+            <table style="color: black;">
+                <tbody >
+                    {% for booking in bookings %}
+                        <tr style="margin-bottom: 5px;">
+                            <td style="border: 1px solid rgb(172, 172, 172); box-shadow: rgb(172, 172, 172) 1px 1px 5px; border-radius: 5px; padding: 10px;">
+                                
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td style="display: flex; flex-direction: column;">
+                                                <p style="font-size: 16px; font-weight: bold; float: left">{{ booking.booking_code.user_id.name }}</p>
+                                                <p style="font-size: 16px; font-weight: bold; float: left">{{ booking.booking_code.user_id.phonenumber }}</p>
+                                            </td>
+                                            <td>
+                                                <p style="font-size: 14px; float: left">Slot booked for Date/time: {{ booking.booking_code.booked_date }}, {{ booking.booking_code.booked_time }}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 400px;">
+                                                <p style="font-size: 14px; text-align: left; word-wrap: normal; float: left">Price Paid: &#8377; {{ booking.booking_code.total_price_paid }}</p>
+                                            </td>
+                                            <td>
+                                                <p style="font-size: 16px; text-align:right; float: right">
+                                                    {% if booking.booking_code.feedback != None %}
+                                                    Feedback: {{ booking.booking_code.feedback }}
+                                                    {% endif %}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    Mode of Payment: {{ booking.booking_code.mode_of_payment }}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p style="font-size: 14px; float: right; color:rgb(172, 172, 172)">{{ booking.booking_code.booking_date }}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> -->
+            {% endblock %}

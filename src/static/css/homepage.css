@@ -1,0 +1,244 @@
+body{
+    font-family: Okra,Helvetica,sans-serif;
+    color: white;
+    
+    margin: 0px;
+}
+.top-container{
+    background: url(./homepage-background.jpg);
+    height: 400px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    display: flex;
+    flex-direction: column;
+    
+}
+.top-container-overlay{
+    background: rgba(0, 0, 0, 0.5);
+    height: 400px;
+    background-size: cover;
+}
+.header-container{
+    
+    display: flex;
+    flex-direction: column;
+}
+nav > ul{
+    display: flex;
+    flex-direction: row;
+    float: right;
+    list-style-type: none;
+    
+    margin-right: 10vw;
+}
+nav > ul > li > a{
+    text-decoration: none;
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+}
+.content-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.logo{
+    
+    display: flex;
+    flex-direction: column;
+}
+.title{
+    font-size: 48px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 1000;
+    margin-bottom: 10px;
+}
+.tagline{
+    font-size: 32px;
+    font-weight: 50;
+    line-height: 0px;
+}
+.search-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.search-bar{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    border-radius: 5px;
+    background: white;
+}
+.search-city{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    position: relative;
+    
+}
+input:focus{
+    outline: none;
+}
+.search-city > input{
+    height: 40px;
+    border: 0px;
+    font-size: 16px;
+    font-family: helvetica;
+    border-radius: 5px;
+}
+.fa-map-marker-alt{
+    width: 15px;
+    color: #FF7E8B;
+    padding: 10px;
+}
+.fa-caret-down{
+    width: 12px;
+    color: grey;
+    cursor: pointer;
+    padding: 10px;
+}
+.rotate-svg{
+    transform: rotate(180deg);
+    transition: transform 0.25s ease-in-out 0.25s;
+}
+.drop-down-city{
+    width: 15em;
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    border: 0.5px solid rgb(192, 192, 192);
+    box-shadow: rgb(161, 161, 161) 0px 1px 5px;
+    visibility: hidden;
+    
+    
+}
+.show{
+    visibility: visible;
+    top: 50px;
+    transition: visibility 0.25s ease 0s, top 0.25s ease 0s;
+}
+.gps{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.gps:hover{
+    background: rgb(233, 233, 233);
+}
+.gps-activate{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    border-bottom: 0.5px solid rgb(219, 219, 219);
+}
+.gps-logo{
+    display: flex;
+    flex-direction: row;
+}
+.fa-location{
+    width: 15px;
+    color: #EF4F5F;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.gps-activate > p{
+    font-size: 16px;
+    font-family: Helvetica;
+    color: #EF4F5F;
+}
+.recent-locations{
+    display: flex;
+    flex-direction: column;
+}
+.recent-locations > p{
+    font-family: Helvetica;
+    color:rgb(161, 161, 161);
+    font-size: 15px;
+    padding-left: 15px;
+}
+.search-divider{
+    border: 0.5px solid rgb(161, 161, 161);
+    margin-top: 10px;
+    height: 20px;
+}
+.search-place{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+.search-logo{
+    display: flex;
+    flex-direction: row;
+}
+.fa-search{
+    width: 18px;
+    color: #828282;
+    padding: 11px 10px 11px 15px;
+}
+.search-place > input{
+    height: 40px;
+    width: 24rem;
+    border: 0px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: helvetica;
+}
+.drop-down-places{
+    width: 25em;
+    min-height: 50px;
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    border: 0.5px solid rgb(192, 192, 192);
+    box-shadow: rgb(161, 161, 161) 0px 1px 5px;
+    visibility: hidden;
+    
+
+}
+.show-suggestion{
+    visibility: visible;
+    top: 50px;
+    transition: visibility 0.25s ease 0s, top 0.25s ease 0s;
+}
+.body-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.contents{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 40vh;
+}
+.contents > p{
+    font-size: 32px;
+    font-family: Helvetica;
+    color: black;
+}
+footer{
+    background: rgb(53, 66, 50);
+    width: 100%;
+}
+.footer-copyrights{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer-copyrights > p{
+    font-size: 16px;
+    color: white;
+}

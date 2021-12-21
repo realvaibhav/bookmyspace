@@ -1,0 +1,77 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+
+    {% block title %}Bms Admin{% endblock %}
+
+                        {% block navbar %}
+                        <a href="../admin">Manage users</a>
+                        <a href="../admin">See all bookings</a>
+                        <a href="../vp">Change password</a>
+                        <a href="../">Logout</a>
+                        {% endblock %}
+
+            {% block content %}
+            <div style="display: flex; flex-direction: row;">
+                <div id="container" style="width: 500px;">
+                    <canvas id="pie-chart"></canvas>
+    
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <div>
+                        <p style="font-size: 24px; color: black;">
+                            <span style="font-size: 48px; color: #fe829c; font-weight: bolder;">{{ customer_percentage }}%</span>
+                            Customers
+                        </p>
+                    </div>
+                    <div>
+                        <p style="font-size: 24px; color: black;">
+                            <span style="font-size: 48px; color: #6fcdcd; font-weight: bolder;">{{ pl_percentage }}%</span>
+                            parking Lot Owner/Managers
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <p style="font-size: 24px; color: black;">
+                    <span style="font-size: 32px; color: #58c061; font-weight: bolder;">{{ total_bookings }}</span>
+                    Bookings Done
+                </p>
+                <p style="font-size: 24px; color: black;">&#8377;
+                    <span style="font-size: 32px; color: #58c061; font-weight: bolder;">{{ total_transaction_amount }}</span>
+                    Transacted
+                </p>
+            </div>
+            
+            
+              <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+              <script>
+            
+                var config = {
+                  type: 'doughnut',
+                  data: {
+                    datasets: [{
+                      data: {{ user_count|safe }},
+                      backgroundColor: [
+                        '#fe829c', '#6fcdcd'
+                      ],
+                      label: 'User Count'
+                    }],
+                    labels: [
+                        'Customer', 'Parking Lot Owner'
+                    ]
+                  },
+                  options: {
+                    responsive: true
+                  }
+                };
+            
+                window.onload = function() {
+                  var ctx = document.getElementById('pie-chart').getContext('2d');
+                  window.myPie = new Chart(ctx, config);
+                };
+            
+              </script>
+           
+            
+            {% endblock %}

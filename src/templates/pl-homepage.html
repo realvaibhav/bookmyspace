@@ -1,0 +1,91 @@
+    {% extends "base_layout.html" %}
+    {% load static %}
+
+
+        {% block title %}Booking History{% endblock %}
+
+                            {% block navbar %}
+                            <a href="pl-bh">Booking History</a>
+                            <a href="vp">Change Password</a>
+                            <a href="pl-up">Update Parking Lot Details</a>
+                            <a href="up">Update Profile</a>
+                            <a href="../">Logout</a>
+                                {% endblock %}
+
+                {% block content %}
+            
+                <table style="color: black;">
+                    <tbody >
+
+                            <tr style="margin-bottom: 5px;">
+                                <td style="padding: 20px;">
+                                    <table style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div style="display: flex; justify-content: center; width: 100%">
+                                                        <img src="{{ pl_data.pl_image.url }}" alt="" style="width: 400px; ">
+                                                    </div>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p style="font-size: 16px; text-align: center;">&#8377; <span style="color: green; font-size: 40px;"><strong>{{ total_earning }}</strong></span> earned till now</p>
+                                                </td>
+                                                <td>
+                                                    <p style="font-size: 16px; text-align: center;"><span style="color: green; font-size: 40px;"><strong>{{ total_bookings }}</strong></span> bookings made till now</p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="margin-bottom: 5px;">
+                                <td style="border: 1px solid rgb(172, 172, 172); box-shadow: rgb(172, 172, 172) 1px 1px 5px; border-radius: 5px; padding: 10px;">
+                                    
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td style="display: flex; flex-direction: column;">
+                                                    <p style="font-size: 16px; font-weight: bold; float: left">Parking lot Name: {{ pl_data.user_id.name }}</p>
+                                                    <p style="font-size: 16px; font-weight: bold; float: left">Manager: {{ pl_data.manager_name }}</p>
+                                                </td>
+                                                <td>
+                                                    <p style="font-size: 14px; float: right">Parking lot Operation Time: {{ pl_data.opening_time }} - {{ pl_data.closing_time }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 400px;">
+                                                    <p style="font-size: 14px; text-align: left; word-wrap: normal; float: left">Booking Price: &#8377; {{ pl_data.booking_price }}</p>
+                                                </td>
+                                                <td>
+                                                    <p style="font-size: 16px; text-align:right; float: right">Address: {{ pl_data.address }}, {{ pl_data.city }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 400px;">
+                                                    <p style="font-size: 14px; text-align: left; word-wrap: normal; float: left; color: grey">{{ pl_data.email }}</p>
+                                                </td>
+                                                <td>
+                                                    <p style="font-size: 16px; text-align:right; float: right; color: grey">{{ pl_data.user_id.phonenumber }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="display: flex; flex-direction: column;">
+                                                    <p style="font-size: 16px; font-weight: bold; float: left">{{ pl_data.total_slot_count }} slots</p>
+                                                    <p style="font-size: 16px; font-weight: bold; float: left"><span style="color: green; font-size: 24px;">{{ available_slots }}</span> slots available</p>
+                                                </td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                </td>
+                            </tr>
+
+                            
+                        
+                    </tbody>
+                </table>
+                {% endblock %}

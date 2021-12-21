@@ -1,0 +1,68 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+
+    {% block title %}Booking History{% endblock %}
+
+                        {% block navbar %}
+                        <a href="cu-bh">Booking History</a>
+                        <a href="vp">Change Password</a>
+                        <a href="up">Update Profile</a>
+                        <a href="../fav">Faviorates</a>
+                        <a href="../">Logout</a>
+                        <script src="{% static 'js/base_layout.js' %}"></script>
+                            {% endblock %}
+
+            {% block content %}
+            
+            <table style="color: black;">
+                <tbody >
+                    {% for booking in bookings %}
+                        <tr style="margin-bottom: 5px;">
+                            <td style="border: 1px solid rgb(172, 172, 172); box-shadow: rgb(172, 172, 172) 1px 1px 5px; border-radius: 5px; padding: 10px;">
+                                
+                                <table>
+                                    <tbody>
+                                        
+                                        <tr>
+                                            <td style="display: flex; flex-direction: column;">
+                                                <p style="font-size: 16px; font-weight: bold; float: left">{{ booking.pl_id.user_id.name }}</p>
+                                                <p style="font-size: 16px; float: left">{{ booking.pl_id.address }}, {{ booking.pl_id.city }}</p>
+                                            </td>
+                                            <td>
+                                                <div class="image-container" style="display: flex; flex-direction: column; justify-content: center;">
+                                                    <img src="{{ booking.pl_id.pl_image.url }}" alt="" style="width: 100px; height: 100px; padding-left: 30px;">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 400px;">
+                                                <p style="font-size: 16px; text-align: left; word-wrap: normal; float: left"> &#8377; <span style="color: rgb(18, 185, 18); font-weight: bolder;">{{ booking.total_price_paid }}</span></p>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                <p style="font-size: 16px; text-align:right; float: left">Booked for Date/time: {{ booking.booked_date }}, {{ booking.booked_time }}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    Mode of Payment: {{ booking.mode_of_payment }}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p style="font-size: 14px; float: right; color:rgb(172, 172, 172)">{{ booking.booking_date }}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endblock %}

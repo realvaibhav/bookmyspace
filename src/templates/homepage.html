@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <title>Book My Space</title>
+    <link rel="shortcut icon" href="{% static 'images/logo-1.jpg' %}" type="image/x-icon">
+</head>
+<body>
+
+    <div class="top-container" style="background: url({% static 'images/homepage-background.jpg' %})">
+        <div class="top-container-overlay">
+            <div class="header-container">
+                <header>
+                    <nav>
+                        <ul>
+                            <li><a href="login">Log in</a></li>
+                            <li><button class="mt-2 font-semibold" onclick="openModal()" style="background: transparent; color: white; border: 0px; font-size: 18px; cursor: pointer;" id="btn">SignUp</button></li>
+                        </ul>
+                    </nav>
+                </header>
+            </div>
+            <div class="content-wrapper">
+                <div class="logo">
+                    <p class="title">
+                        <em>Book My Space</em>
+                    </p>
+                </div>
+                <div class="tag-line">
+                    <p class="tagline">
+                        Find the parking where you want
+                    </p>
+                </div>
+                <form action="" method="post">{% csrf_token %}
+                <div class="search-container">
+                    <div class="search-bar">
+                        <div class="search-city">
+                            <i>
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="map-marker-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-map-marker-alt fa-w-12 fa-2x"><path fill="currentColor" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z" class=""></path></svg>
+                            </i>
+                            
+                                <input type="text" placeholder="City name" name="city" value="" autofocus="false" onclick="openDropdown1()" class="drop-down-city-input" required="">
+                            
+                            
+                            <i onclick="openDropdown1()">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-caret-down fa-w-10 fa-2x"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" class=""></path></svg>
+                            </i>
+                            <div class="drop-down-city">
+                                <div class="gps" onclick="getLocation()">
+                                    <div class="gps-activate">
+                                        <div class="gps-logo">
+                                            <i>
+                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-location fa-w-16 fa-2x"><path fill="currentColor" d="M496 224h-50.88C431.61 143.66 368.34 80.39 288 66.88V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v50.88C143.66 80.39 80.39 143.66 66.88 224H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h50.88C80.39 368.34 143.66 431.61 224 445.12V496c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-50.88c80.34-13.51 143.61-76.78 157.12-157.12H496c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM256 384c-70.7 0-128-57.31-128-128s57.3-128 128-128 128 57.31 128 128-57.3 128-128 128zm0-216c-48.6 0-88 39.4-88 88s39.4 88 88 88 88-39.4 88-88-39.4-88-88-88z" class=""></path></svg>
+                                            </i>
+                                        </div>
+                                        <p>Detect current location<br><span style="font-size: 14px; font-family: Helvetica; color: rgb(161, 161, 161)">Using GPS</span></p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="recent-locations">
+                                    <p>Recent Locations</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-divider"></div>
+                        <div class="search-place">
+                            <div class="search-logo">
+                                <i>
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-search fa-w-16 fa-2x"><path fill="currentColor" d="M508.5 481.6l-129-129c-2.3-2.3-5.3-3.5-8.5-3.5h-10.3C395 312 416 262.5 416 208 416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c54.5 0 104-21 141.1-55.2V371c0 3.2 1.3 6.2 3.5 8.5l129 129c4.7 4.7 12.3 4.7 17 0l9.9-9.9c4.7-4.7 4.7-12.3 0-17zM208 384c-97.3 0-176-78.7-176-176S110.7 32 208 32s176 78.7 176 176-78.7 176-176 176z" class=""></path></svg>
+                                </i>
+                            </div>
+                            
+                                <input type="text" name="place_address" placeholder="Search for the address or place" value="" autofocus="false" onclick="openDropdown2()" class="drop-down-places-input" required="">
+                            
+                            <div class="drop-down-places">
+                                <div class="place-suggestion"></div>
+                            </div>
+                        </div>
+                        <input type="submit" id="search-button" value="search" style="visibility: hidden;">
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="body-container">
+        <div class="contents">
+            <p></p>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-copyrights">
+            <p>2021 &copy; Book My Space | All rights reserved.</p>
+        </div>
+        
+    </footer>
+    <div class="main-modal fixed py-12 w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster"
+		style="background: rgba(0,0,0,.7);">
+		<div
+			class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
+			<div class="modal-content pt-12 pb-6 text-left px-6">
+				<!--Title-->
+				<div class="flex justify-between items-center pb-3">
+					<p class="text-2xl text-black font-bold">Hello New User</p>
+					<div class="modal-close cursor-pointer z-50">
+						<svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+							viewBox="0 0 18 18">
+							<path
+								d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+							</path>
+						</svg>
+					</div>
+				</div>
+				<!--Body-->
+				<div class="my-5 text-black">
+					<p>Select your user type</p>
+				</div>
+				<!--Footer-->
+				<div class="flex justify-center space-x-6 pt-2">
+					<a href="signup"
+						class="focus:outline-none text-white px-4 bg-green-600 p-3 rounded-lg hover:bg-green-700">Customer</a>
+
+                        <a href="signup-pl"
+						class="focus:outline-none text-white px-4 bg-green-600 p-3 rounded-lg hover:bg-green-700">Manager</a>
+                        
+				</div>
+			</div>
+		</div>
+	</div>
+    
+</body>
+<script>
+    const modal = document.querySelector('.main-modal');
+const closeButton = document.querySelectorAll('.modal-close');
+
+const modalClose = () => {
+    modal.classList.remove('fadeIn');
+    modal.classList.add('fadeOut');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 500);
+}
+
+const openModal = () => {
+    modal.classList.remove('fadeOut');
+    modal.classList.add('fadeIn');
+    modal.style.display = 'flex';
+}
+
+for (let i = 0; i < closeButton.length; i++) {
+
+    const elements = closeButton[i];
+
+    elements.onclick = (e) => modalClose();
+
+    modal.style.display = 'none';
+
+    window.onclick = function (event) {
+        if (event.target == modal) modalClose();
+    }
+}
+</script>
+<script src="{% static 'js/homepage.js' %}"></script>
+</html>

@@ -1,0 +1,129 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% block searchbarcss %}
+<link rel="stylesheet" href="{% static 'css/parking_lots.css' %}">
+{% endblock %}
+
+    {% block title %}Search Results{% endblock %}
+
+                        {% block navbar %}
+                        <a href="cu-bh">Booking History</a>
+                        <a href="vp">Change Password</a>
+                        <a href="up">Update Profile</a>
+                        <a href="fav">Faviorates</a>
+                        <a href="../">Logout</a>
+                        <script src="{% static 'js/base_layout.js' %}"></script>
+                        {% endblock %}
+
+
+
+    {% block searchbar %}
+    <div class="content-wrapper">
+        <form action="" method="post">{% csrf_token %}
+            <div class="search-container">
+                <div class="search-bar">
+                    <div class="search-city">
+                        <i>
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="map-marker-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-map-marker-alt fa-w-12 fa-2x"><path fill="currentColor" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z" class=""></path></svg>
+                        </i>
+                        <input type="text" placeholder="City name" name="city" value="{{ city }}" autofocus="false" onclick="openDropdown1()" class="drop-down-city-input" required="">
+                        <i onclick="openDropdown1()">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-caret-down fa-w-10 fa-2x"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" class=""></path></svg>
+                        </i>
+                        <div class="drop-down-city">
+                            <div class="gps" onclick="getLocation()">
+                                <div class="gps-activate">
+                                    <div class="gps-logo">
+                                        <i>
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-location fa-w-16 fa-2x"><path fill="currentColor" d="M496 224h-50.88C431.61 143.66 368.34 80.39 288 66.88V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v50.88C143.66 80.39 80.39 143.66 66.88 224H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h50.88C80.39 368.34 143.66 431.61 224 445.12V496c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-50.88c80.34-13.51 143.61-76.78 157.12-157.12H496c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM256 384c-70.7 0-128-57.31-128-128s57.3-128 128-128 128 57.31 128 128-57.3 128-128 128zm0-216c-48.6 0-88 39.4-88 88s39.4 88 88 88 88-39.4 88-88-39.4-88-88-88z" class=""></path></svg>
+                                        </i>
+                                    </div>
+                                    <p>Detect current location<br><span style="font-size: 14px; font-family: Helvetica; color: rgb(161, 161, 161)">Using GPS</span></p>
+                                </div>
+                                
+                            </div>
+                            <div class="recent-locations">
+                                <p>Recent Locations</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-divider"></div>
+                    <div class="search-place">
+                        <div class="search-logo">
+                            <i>
+                                <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-search fa-w-16 fa-2x"><path fill="currentColor" d="M508.5 481.6l-129-129c-2.3-2.3-5.3-3.5-8.5-3.5h-10.3C395 312 416 262.5 416 208 416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c54.5 0 104-21 141.1-55.2V371c0 3.2 1.3 6.2 3.5 8.5l129 129c4.7 4.7 12.3 4.7 17 0l9.9-9.9c4.7-4.7 4.7-12.3 0-17zM208 384c-97.3 0-176-78.7-176-176S110.7 32 208 32s176 78.7 176 176-78.7 176-176 176z" class=""></path></svg>
+                            </i>
+                        </div>
+                        <input type="text" placeholder="Search for the address or place" name="place_address" value="{{ address }}" autofocus="false" onclick="openDropdown2()" class="drop-down-places-input" required="">
+                        <div class="drop-down-places">
+                            <div class="place-suggestion"></div>
+                        </div>
+                    </div>
+                    <input type="submit" id="search-button" name="search_button" value="search" style="visibility: hidden;">
+                
+                </div>
+            </div>
+    </div>
+    <script src="{% static 'js/customer-homepage.js' %}"></script>
+    
+    {% endblock %}
+        {% block content %}
+        
+            
+            {% if no_data_message != '' %}
+                <p>{{ no_data_message }}</p>
+                <div style="display: flex; justify-content: center;">
+                    <img src="{% static 'images/no-search-result.jpg' %}" style="width: 30%;"/>
+                </div>
+            {% else %}
+            <p>Search results</p>
+            {% endif %}
+            
+                
+                            
+                                <div class="sort-form-container">
+                                    <select name="sort" id="sort">
+                                        <option value="" Selected disabled hidden>Sort By</option>
+                                        <option value="price_high">Price: High to low</option>
+                                        <option value="price_low">Price: Low to High</option>
+                                        <option value="popularity">Popularity</option>
+                                    </select>
+                                    <input type="submit" name="sort_button" value="sort" id="sort_button" />
+                                
+                                </form>
+                                </div>
+                            
+                                <!-- <form action="" method="POST">{% csrf_token %} -->
+                                    
+                                
+                        
+                        
+                    <div class="pl-cards-list-container">
+                        {% for parking_lot in parking_lots %}
+                        <div class="pl-card-container">
+                            <a href="{{ parking_lot.get_absolute_url }}" class="pl-detail-link">
+                                <div class="pl-image-container">
+                                    <img src="{{ parking_lot.pl_image.url }}" alt="" style="width: 200px; height: 200px">
+                                </div>
+                                <div class="pl-info-container">
+                                    <p class="pl-name">{{ parking_lot.user_id.name }}</p>
+                                    <!-- <p class="pl-address">{{ parking_lot.address }}</p> -->
+                                    <p class="pl-price">
+                                        {% if parking_lot.booking_price == 0 %}
+                                            Free
+                                        {% else %}
+                                            &#8377; {{ parking_lot.booking_price }} / hour
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+
+                    
+            
+            
+        {% endblock %}
+        

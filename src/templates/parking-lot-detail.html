@@ -1,0 +1,244 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% block searchbarcss %}
+<link rel="stylesheet" href="{% static 'css/parking-lot-detail.css' %}">
+
+{% endblock %}
+
+    {% block title %}Parking Lot Detail{% endblock %}
+
+                        {% block navbar %}
+                            <a href="../../cu-bh">Booking History</a>
+                            <a href="../../vp">Change Password</a>
+                            <a href="../../up">Update Profile</a>
+                            <a href="../../fav">Faviorates</a>
+                            <a href="../../">Logout</a>
+                        {% endblock %}
+
+            {% block content %}
+            <div class="big-container">
+                <div class="left-container">
+                    <div class="image-container">
+                        <img src="{{ parking_lot.pl_image.url }}" alt="">
+                    </div>
+                    <div class="mb-6">
+                        <div class="form-card-container">
+                            <div class="form-container">
+                                    <form action="" method="post">{% csrf_token %}
+                                        <div class="input-container">
+                                            
+                                            <input type="text" name="hours" placeholder="Enter No of Hours"/>
+                                        </div>
+                                        <div class="input-container">
+                                            
+                                            <input type="text" name="booked_date" placeholder="Date of booking (YYYY-MM-DD)" />
+                                        </div>
+                                        <div class="input-container">
+                                            
+                                            <input type="text" name="booked_time" placeholder="Time slot" />
+                                        </div>
+                                        
+                                            <input type="submit" name="book_pl" value="Book Now" class="book-btn">
+                                        </form>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                
+                <div class="details-container">
+                    <p class="pl-name">{{ parking_lot.user_id.name }}</p>
+                    <div class="pl-address-container">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="map-marker-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-map-marker-alt fa-w-12 fa-2x"><path fill="currentColor" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z" class=""></path></svg>
+                        <p class="address">{{ parking_lot.address }}</p>
+                    </div>
+                    <div class="price-container">
+                        <p class="price">
+                            {% if parking_lot.booking_price == 0 %}
+                            Free
+                            {% else %}
+                            &#8377; {{ parking_lot.booking_price }} / hour
+                            {% endif %}
+                        </p>
+                        <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="info-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-info-circle fa-w-16 fa-2x"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 448c-110.532 0-200-89.431-200-200 0-110.495 89.472-200 200-200 110.491 0 200 89.471 200 200 0 110.53-89.431 200-200 200zm0-338c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
+                        <p class="slots-left">Only {{ slots_left }} slots available!</p>
+                    </div>
+                    <div class="time-container">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16 fa-2x"><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z" class=""></path></svg>
+                        <p class="time">{{ parking_lot.opening_time }} - {{ parking_lot.closing_time }}</p>
+                    </div>
+                    <div class="fav">
+                        <form action="" method="POST">{% csrf_token %}
+                            <button type="submit" name="add_to_fav" value="{{ parking_lot.pl_id }}" style="background: transparent; border: 0px;">
+                                <svg aria-hidden="true" style="width: 25px; height: 25px; color: rgb(172, 172, 172); cursor: pointer" focusable="false" data-prefix="far" data-icon="heart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-heart fa-w-16 fa-2x"><path fill="currentColor" d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z" class=""></path></svg>
+                            </button>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="map" style="width: 90%; height:600px"></div>
+
+            <div class="dropdown">
+                <div onclick="myFunction()" class="dropbtn">
+                    <p class="pl-detailbtn">
+                        Parking Lot Details
+                    </p>
+                </div>
+                <div id="myDropdown" class="dropdown-content">
+                  <table>
+                      <tbody>
+                          <tr>
+                            <td>
+                                <p class="pl-information-title">Manager Name</p>
+                            </td>
+                              <td>
+                                  <p class="pl-information">{{ parking_lot.manager_name }}</p>
+                              </td>
+                          </tr>
+                          <tr>
+                            <td>
+                                <p class="pl-information-title">City</p>
+                            </td>
+                            <td>
+                                <p class="pl-information">{{ parking_lot.city }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="pl-information-title">Manager Email</p>
+                            </td>
+                            <td>
+                                <p class="pl-information">{{ parking_lot.email }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="pl-information-title">Manager Phonenumber</p>
+                            </td>
+                            <td>
+                                <p class="pl-information">{{ parking_lot.user_id.phonenumber }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="pl-information-title">Total Parking Slots</p>
+                            </td>
+                            <td>
+                                <p class="pl-information">{{ parking_lot.total_slot_count }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="pl-information-title">Description</p>
+                            </td>
+                            <td>
+                                <p class="pl-information">{{ parking_lot.pl_description }}</p>
+                            </td>
+                        </tr>
+                      </tbody>
+                  </table>
+                </div>
+              </div> 
+            <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo0o21ps6YYXBKwMf86zPYzA8n2AkkizM&callback=initMap"
+      async
+    ></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+                            <script>
+                                //map render
+                                let map;
+                                
+
+                                function initMap() {
+                                map = new google.maps.Map(document.getElementById("map"), {
+                                    center: { lat: 27.91515594487475, lng: 78.07630276746501 },
+                                    zoom: 20,
+                                });
+                                }
+                                
+                                var marker = new google.maps.Marker({
+                                    position: { lat: 27.91515594487475, lng: 78.07630276746501 }
+                                });
+
+                                // To add the marker to the map, call setMap();
+                                marker.setMap(map);
+
+                                
+
+
+                                // geocode();
+                                // function geocode(){
+                                //     // Prevent actual submit
+                                   
+
+                                //     var location = 'Maulana azad Library, cycle stand Amu Aligarh';
+
+                                //     axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+                                //         params:{
+                                //         address:location,
+                                //         key:'AIzaSyAo0o21ps6YYXBKwMf86zPYzA8n2AkkizM'
+                                //         }
+                                //     })
+                                //     .then(function(response){
+                                //         // Log full response
+                                //         console.log(response);
+                                //         console.log("SOME OUTPYT");
+
+                                //         // Formatted Address
+                                //         // var formattedAddress = response.data.results[0].formatted_address;
+                                //         // var formattedAddressOutput = `
+                                //         // <ul class="list-group">
+                                //         //     <li class="list-group-item">${formattedAddress}</li>
+                                //         // </ul>
+                                //         // `;
+
+                                //         // // Address Components
+                                //         // var addressComponents = response.data.results[0].address_components;
+                                //         // var addressComponentsOutput = '<ul class="list-group">';
+                                //         // for(var i = 0;i < addressComponents.length;i++){
+                                //         // addressComponentsOutput += `
+                                //         //     <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>: ${addressComponents[i].long_name}</li>
+                                //         // `;
+                                //         //}
+                                //         // addressComponentsOutput += '</ul>';
+
+                                //         // // Geometry
+                                //         // var lat = response.data.results[0].geometry.location.lat;
+                                //         // var lng = response.data.results[0].geometry.location.lng;
+                                //         // var geometryOutput = `
+                                //         // <ul class="list-group">
+                                //         //     <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
+                                //         //     <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
+                                //         // </ul>
+                                //         // `;
+
+                                //         // // Output to app
+                                //         // document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
+                                //         // document.getElementById('address-components').innerHTML = addressComponentsOutput;
+                                //         // document.getElementById('geometry').innerHTML = geometryOutput;
+                                //     })
+                                //     .catch(function(error){
+                                //         console.log(error);
+                                //     });
+                                // }
+
+                                function myFunction() {
+                                    document.getElementById("myDropdown").classList.toggle("show");
+                                    }
+
+                                    // Close the dropdown menu if the user clicks outside of it
+                                    window.onclick = function(event) {
+                                    if (!event.target.matches('.dropbtn')) {
+                                        var dropdowns = document.getElementsByClassName("dropdown-content");
+                                        var i;
+                                        for (i = 0; i < dropdowns.length; i++) {
+                                        var openDropdown = dropdowns[i];
+                                        if (openDropdown.classList.contains('show')) {
+                                            openDropdown.classList.remove('show');
+                                        }
+                                        }
+                                    }
+                                    } 
+                            </script>
+            {% endblock %}

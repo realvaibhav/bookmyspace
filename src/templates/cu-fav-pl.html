@@ -1,0 +1,57 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% block searchbarcss %}
+<link rel="stylesheet" href="{% static 'css/cu-fav-pl.css' %}">
+{% endblock %}
+
+    {% block title %}Faviorates{% endblock %}
+
+                        {% block navbar %}
+                        <a href="../cu-bh">Booking History</a>
+                        <a href="../vp">Change Password</a>
+                        <a href="../up">Update Profile</a>
+                        <a href="fav">Faviorates</a>
+                        <a href="../">Logout</a>
+                        {% endblock %}
+
+
+
+
+        {% block content %}
+    
+            {% if no_data_message != '' %}
+                <p>{{ no_data_message }}</p>
+                {% endif %}
+                
+            
+                <!-- <form action="" method="POST">{% csrf_token %} -->
+                    
+                
+        
+        
+    <div class="pl-cards-list-container">
+        {% for parking_lot in fav_pl %}
+        <div class="pl-card-container">
+            <a href="{{ parking_lot.get_absolute_url }}" class="pl-detail-link">
+                <div class="pl-image-container">
+                    <img src="{% static 'images/logo.jpg' %}" alt="" style="width: 200px; height: auto">
+                </div>
+                <div class="pl-info-container">
+                    <p class="pl-name">{{ parking_lot.user_id.name }}</p>
+                    <!-- <p class="pl-address">{{ parking_lot.address }}</p> -->
+                    <p class="pl-price">
+                        {% if parking_lot.booking_price == 0 %}
+                            Free
+                        {% else %}
+                            &#8377; {{ parking_lot.booking_price }} / hour
+                        {% endif %}
+                    </p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+                
+            
+        {% endblock %}
+        
