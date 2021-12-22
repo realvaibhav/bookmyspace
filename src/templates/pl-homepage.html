@@ -13,34 +13,34 @@
                                 {% endblock %}
 
                 {% block content %}
-            
+                <div style="display: flex; justify-content: center; width: 100%">
+                    <img src="{{ pl_data.pl_image.url }}" alt="" style="width: 400px; ">
+                </div>
+                <div style="display: flex; flex-direction: row; padding: 10px; margin: 10px 0px 10px 0px;">
+                    <div style="display: flex; flex-direction: column; padding: 20px; z-index: 1; box-shadow: rgb(172, 172, 172) 1px 1px 5px; max-width: 300px; margin: 10px">
+                        <p style="font-size: 16px; text-align: left; color: #344050; font-weight: bold;">Total Earning<br>
+                            <span style="color: green; font-size: 32px;">&#8377;{{ total_earning }}</span></p>
+                        
+                    </div>
+                    <div style="display: flex; flex-direction: column; padding: 20px; z-index: 1; box-shadow: rgb(172, 172, 172) 1px 1px 5px; max-width: 200px; margin: 10px">
+                        <p style="font-size: 16px; text-align: left; color: #344050; font-weight: bold;">Total bookings<br>
+                            <span style="color: green; font-size: 32px;">{{ total_bookings }}</span></p>
+                        
+                    </div>
+                    <div style="display: flex; flex-direction: row; padding: 20px; z-index: 1; box-shadow: rgb(172, 172, 172) 1px 1px 5px; justify-content: center; margin: 10px">
+                        <p style="font-size: 16px; text-align: left; color: #344050; font-weight: bold;">Parking lot status<br>
+                            <span style="color: #75d56a; font-size: 14px;">Available slots   {{ available_slots }}</span><br>
+                            <span style="color: #acacac; font-size: 14px;">Booked slots   {{ pl_data.booked_slot_count }}</span>
+                        </p>
+                            <div id="container" style="width: 300px;">
+                                <canvas id="pie-chart"></canvas>
+                
+                            </div>
+                    </div>
+                </div>
+                
                 <table style="color: black;">
                     <tbody >
-
-                            <tr style="margin-bottom: 5px;">
-                                <td style="padding: 20px;">
-                                    <table style="width: 100%">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div style="display: flex; justify-content: center; width: 100%">
-                                                        <img src="{{ pl_data.pl_image.url }}" alt="" style="width: 400px; ">
-                                                    </div>
-                                                    
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p style="font-size: 16px; text-align: center;">&#8377; <span style="color: green; font-size: 40px;"><strong>{{ total_earning }}</strong></span> earned till now</p>
-                                                </td>
-                                                <td>
-                                                    <p style="font-size: 16px; text-align: center;"><span style="color: green; font-size: 40px;"><strong>{{ total_bookings }}</strong></span> bookings made till now</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
                             <tr style="margin-bottom: 5px;">
                                 <td style="border: 1px solid rgb(172, 172, 172); box-shadow: rgb(172, 172, 172) 1px 1px 5px; border-radius: 5px; padding: 10px;">
                                     
@@ -74,7 +74,7 @@
                                             <tr>
                                                 <td style="display: flex; flex-direction: column;">
                                                     <p style="font-size: 16px; font-weight: bold; float: left">{{ pl_data.total_slot_count }} slots</p>
-                                                    <p style="font-size: 16px; font-weight: bold; float: left"><span style="color: green; font-size: 24px;">{{ available_slots }}</span> slots available</p>
+                                                    
                                                 </td>
                                                 
                                             </tr>
@@ -88,4 +88,32 @@
                         
                     </tbody>
                 </table>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+              <script>
+            
+                var config = {
+                  type: 'doughnut',
+                  data: {
+                    datasets: [{
+                      data: [ {{ pl_data.booked_slot_count|safe }}, {{ available_slots|safe }} ],
+                      backgroundColor: [
+                        '#acacac', '#75d56a'
+                      ],
+                      label: 'Slots Count'
+                    }],
+                    labels: [
+                        'Booked slots', 'Available slots'
+                    ]
+                  },
+                  options: {
+                    responsive: true
+                  }
+                };
+            
+                window.onload = function() {
+                  var ctx = document.getElementById('pie-chart').getContext('2d');
+                  window.myPie = new Chart(ctx, config);
+                };
+            
+              </script>
                 {% endblock %}

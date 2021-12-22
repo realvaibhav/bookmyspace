@@ -5,16 +5,23 @@
     {% block title %}Booking History{% endblock %}
 
                         {% block navbar %}
-                        <a href="cu-bh">Booking History</a>
+                        <a href="../cu-bh">Booking History</a>
                         <a href="vp">Change Password</a>
-                        <a href="up">Update Profile</a>
+                        <a href="../up">Update Profile</a>
                         <a href="../fav">Faviorates</a>
                         <a href="../">Logout</a>
                         <script src="{% static 'js/base_layout.js' %}"></script>
                             {% endblock %}
 
             {% block content %}
-            
+            {% if no_data_message != '' %}
+                <p>{{ no_data_message }}</p>
+                <div style="display: flex; justify-content: center;">
+                    <img src="{% static 'images/no-favs.png' %}" style="width: 90%;"/>
+                </div>
+            {% else %}
+            <p>Your previous bookings</p>
+            {% endif %}
             <table style="color: black;">
                 <tbody >
                     {% for booking in bookings %}

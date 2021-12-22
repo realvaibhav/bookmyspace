@@ -12,6 +12,9 @@ from datetime import datetime
 from django.core.mail import send_mail
 import smtplib
 from email.message import EmailMessage
+import os
+from twilio.rest import Client
+
 # Create your views here.
 
 # def available_parking_lot_view(get):
@@ -106,8 +109,9 @@ def parking_lot_detail_view(request, pl_id):
             no_of_hours = int(request.POST.get('hours'))
             booked_date = request.POST.get('booked_date')
             booked_time = request.POST.get('booked_time')
+            user_data = bms_signup.objects.get(user_id = cache.get('loggedin_user_id'))
             booking_data = {
-                'user_id' : bms_signup.objects.get(user_id = cache.get('loggedin_user_id')),
+                'user_id' : user_data,
                 "pl_id" : pl_data,
                 "total_price_paid" : (pl_data.booking_price * no_of_hours),
                 "no_of_hours" : no_of_hours,
@@ -122,8 +126,15 @@ def parking_lot_detail_view(request, pl_id):
             }
             bms_pl_booking_history.objects.create(**booking_data_pl)
             billing_amount = str(pl_data.booking_price * no_of_hours)
-            email_message = bms_signup.objects.get(user_id = cache.get('loggedin_user_id')).name + " have booked a slot in your parking Lot." "\nBooked Time: "+ booked_time +" "+ booked_date + "\nDuration: " + str(no_of_hours) + "hours" + "\nTotal Billing amount: ₹" + billing_amount
+            email_message = user_data.name + " have booked a slot in your parking Lot. \nBooked Time: "+ booked_time +" "+ booked_date + "\nDuration: " + str(no_of_hours) + " hours" + "\nTotal Billing amount: ₹" + billing_amount
             send_email("New Slot Booked", email_message, "pxyz220@gmail.com")
+
+            sms_message = "Hello, " + user_data.name + " You have successfully booked a slot at " + pl_data.user_id.name + "\nBooked Time: "+ booked_time +" "+ booked_date + "\nDuration: " + str(no_of_hours) + " hours" + "\nTotal Billing amount: ₹" + billing_amount
+            send_sms(user_data.phonenumber, sms_message)
+
+            sms_message_pl = "Hello " + pl_data.user_id.name + "," + user_data.name+ " have booked a slot in your parking Lot. Booked Time: "+ booked_time +" "+ booked_date + " Duration: " + str(no_of_hours) + " hours" + " Total Billing amount: ₹" + billing_amount
+            #send_sms(pl_data.user_id.phonenumber, sms_message_pl)
+
             return redirect(booking_history_view)
         
     return render(request, "parking-lot-detail.html", context)
@@ -258,3 +269,16 @@ def send_email(subject, body, to):
     server.send_message(msg)
 
     server.quit()
+
+def send_sms(phonenumber, sms_content):
+    account_sid = 'AC87b7171aff5c77e2cdcedaa8527d4776'
+    auth_token = 'a4c9db88ff422a8f863f7ae8a93ac014'
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+                                body=sms_content,
+                                from_='+16616895014',
+                                to=phonenumber
+                            )
+    print(message.sid)
+

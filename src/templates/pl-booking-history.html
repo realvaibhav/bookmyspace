@@ -13,7 +13,15 @@
 
             {% block content %}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-            <p>{{ no_data_message }}</p>
+            
+            {% if no_data_message != '' %}
+                <p>{{ no_data_message }}</p>
+                <div style="display: flex; justify-content: center;">
+                    <img src="{% static 'images/no-favs.png' %}" style="width: 90%;"/>
+                </div>
+            {% else %}
+            <p>Booking History</p>
+            {% endif %}
             <table class="table table-striped" style="max-width: 80%;">
                 <thead>
                   <tr>

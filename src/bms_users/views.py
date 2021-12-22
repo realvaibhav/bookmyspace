@@ -355,10 +355,15 @@ def homepage_view(request):
     
 def customer_homepage_view(request):
     user = bms_signup.objects.get(user_id = cache.get('loggedin_user_id'))
-    fav_query_set = bms_cu_faviorate.objects.filter(user_id = user)
-    recent_book_query_set = bms_cu_booking_history.objects.filter(user_id = user)[:5]
+    recent_book_query_set = bms_cu_booking_history.objects.filter(user_id = user).order_by('-booking_date')[:4]
+    booking_count = recent_book_query_set.count()
+    print(recent_book_query_set)
+    if booking_count == 0:
+        no_data_msg = "You have no bookings"
+    else:
+        no_data_msg = ''
     context = {
-        "fav_pl": fav_query_set,
+        'no_data_msg': no_data_msg,
         "recent_book" : recent_book_query_set
     }
     if request.method == "POST":

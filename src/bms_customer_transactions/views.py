@@ -25,7 +25,7 @@ def booking_history_view(get):
             # booking["address"] = pl_data.address
             # booking["parking_lot_name"] = bms_signup.objects.get(user_id = pl_user_id).name
         context = {
-            "no_data_message":"",
+            "no_data_message":'',
             "bookings" : query_set
         }
         return render(get, "cu-booking-history.html", context)
@@ -38,7 +38,7 @@ def fav_pl_view(get):
         }
     else:
         context = {
-            "no_data_message" : "",
+            "no_data_message" : '',
             "fav_pl" : query_set
         }
     return render(get, "cu-fav-pl.html", context)

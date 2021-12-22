@@ -111,16 +111,6 @@ footer{
 }
 
 
-.dropdown-options {
-    visibility: visible;
-    position: absolute;
-    right: 0px;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    border-radius: 5px;
-    box-shadow:rgb(161, 161, 161) 1px 1px 5px;
-    z-index: 1;
-}
 .dropdown-options > a{
     text-decoration: none;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -128,15 +118,7 @@ footer{
     padding: 12px 16px;
     font-size: 16px;
 }
-.dropdown-options a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+
+.dropdown-options a:hover {background-color: #ddd;}
 
 
-.dropdown-options a:hover {background-color: #ddd}
-
-
-.show-options {visibility: visible;}

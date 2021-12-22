@@ -86,15 +86,44 @@
     </div>
     <div class="body-container">
         <div class="contents">
-           
+            {% if no_data_msg != '' %}
+                <p style="text-align: center;">Welcome!<br>Now book you parking slot online</p>
+                <div style="display: flex; justify-content: center;">
+                    <img src="{% static 'images/welcome.jpg' %}" style="width: 50%;"/>
+                </div>
+            {% else %}
+            <p>Your recent bookings</p>
+            {% endif %}
+            <div class="pl-cards-list-container">
+                {% for booking in recent_book %}
+                <div class="pl-card-container">
+                    <a href="{{ booking.pl_id.get_absolute_url }}" class="pl-detail-link">
+                        <div class="pl-image-container">
+                            <img src="{{ booking.pl_id.pl_image.url }}" alt="" style="width: 200px; height: 200px">
+                        </div>
+                        <div class="pl-info-container">
+                            <p class="pl-name">{{ booking.pl_id.user_id.name }}</p>
+                            <!-- <p class="pl-address">{{ parking_lot.address }}</p> -->
+                            <p class="pl-price">
+                                {% if booking.pl_id.booking_price == 0 %}
+                                    Free
+                                {% else %}
+                                    &#8377; {{ booking.pl_id.booking_price }} / hour
+                                {% endif %}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-    <footer>
+    <!-- <footer>
         <div class="footer-copyrights">
             <p>2021 &copy; Book My Space | All rights reserved.</p>
         </div>
         
-    </footer>
+    </footer> -->
     <script src="{% static 'js/customer-homepage.js' %}"></script>
 </body>
 </html>

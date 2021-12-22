@@ -32,16 +32,29 @@
                     </div>
                 </div>
             </div>
-            <div style="display: flex; flex-direction: column;">
-                <p style="font-size: 24px; color: black;">
-                    <span style="font-size: 32px; color: #58c061; font-weight: bolder;">{{ total_bookings }}</span>
-                    Bookings Done
-                </p>
-                <p style="font-size: 24px; color: black;">&#8377;
-                    <span style="font-size: 32px; color: #58c061; font-weight: bolder;">{{ total_transaction_amount }}</span>
-                    Transacted
-                </p>
-            </div>
+            <div style="display: flex; flex-direction: row; padding: 10px; margin: 10px 0px 10px 0px;">
+              <div style="display: flex; flex-direction: column; padding: 20px; z-index: 1; box-shadow: rgb(172, 172, 172) 1px 1px 5px; max-width: 300px; margin: 10px">
+                  <p style="font-size: 16px; text-align: left; color: #344050; font-weight: bold;">Total transaction<br>
+                      <span style="color: green; font-size: 32px;">&#8377;{{ total_transaction_amount }}</span></p>
+                  
+              </div>
+              <div style="display: flex; flex-direction: column; padding: 20px; z-index: 1; box-shadow: rgb(172, 172, 172) 1px 1px 5px; max-width: 200px; margin: 10px">
+                  <p style="font-size: 16px; text-align: left; color: #344050; font-weight: bold;">Total booking<br>
+                      <span style="color: green; font-size: 32px;">{{ total_bookings }}</span></p>
+                  
+              </div>
+              
+          </div>
+
+          <div style="display: flex; flex-direction: row; padding: 20px; z-index: 1; box-shadow: rgb(172, 172, 172) 1px 1px 5px; justify-content: center; margin: 10px">
+            <p style="font-size: 16px; text-align: left; color: #344050; font-weight: bold;">Parking lot bookings<br>
+                <span style="color: #1da1f2; font-size: 14px;">2021</span>
+            </p>
+                <div id="container" style="width: 800px;">
+                    <canvas id="bar-chart"></canvas>
+    
+                </div>
+          </div>
             
             
               <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
@@ -70,7 +83,36 @@
                   var ctx = document.getElementById('pie-chart').getContext('2d');
                   window.myPie = new Chart(ctx, config);
                 };
-            
+                
+                
+                var ctx = document.getElementById('bar-chart');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Bookings',
+                            data: {{ booking_count|safe }},
+                            backgroundColor: [
+                                '#1da1f2', '#1da1f2', '#1da1f2', '#1da1f2','#1da1f2', '#1da1f2', '#1da1f2', '#1da1f2', '#1da1f2','#1da1f2', '#1da1f2','#1da1f2'
+                            ],
+                            borderColor: [
+                            '#1da1f2'
+                            ],
+                            borderWidth: 0,
+                            borderRadius: 10,
+                            barThickness: 10
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
               </script>
            
             
